@@ -20,6 +20,15 @@ class Node:
         this.netSvc.udpClient.broadcastMessage(this.CLUSTER_JOIN_MESSAGE)
     }
 
+    def listen(): Unit =  {
+        new Thread(() => {
+            while(true) {
+                var message: String = this.netSvc.udpClient.receiveMessage()
+                println(message)
+            }
+        }).start()
+    }
+
 
 enum NodeRole:
     case FOLLOWER, CANDIDATE, LEADER
